@@ -1,0 +1,27 @@
+{
+  "name": "groovn-music-be",
+  "version": "0.0.1",
+  "description": "Back end for Groovn Music app",
+  "main": "src/index.js",
+  "repository": "git@github.com:Lambda-School-Labs/groovn-music-be.git",
+  "author": "Dominic Torruellas <dom@domtorr.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/index.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "eslint": "^6.5.1",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.18.2"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.9.7",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "mongoose": "^5.7.6"
+  }
+}
