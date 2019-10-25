@@ -25,6 +25,7 @@ const startServer = async () => {
   await mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    dbName: 'groovn',
   });
 
   // Launch the server
