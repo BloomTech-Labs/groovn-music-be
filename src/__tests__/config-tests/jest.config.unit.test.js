@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
-import testDb from '../../../util/testDb';
+import testDb from '../../util/testDb';
 
-// Creating a fake mongo model to test if Jest is working
+// Creating a fake mongo model to test if Jest is workin'g
 const testSchema = new mongoose.Schema({
   test: { type: Boolean, required: true },
 });
 
 const testModel = new mongoose.model('Test', testSchema);
 
-describe('Jest configuration test', () => {
+describe('Jest configuration tests', () => {
   beforeAll(() => testDb.connect());
 
   afterAll(() => testDb.disconnect());
