@@ -1,4 +1,6 @@
-export default {
+import mongoose from 'mongoose';
+
+export const testDb = {
   connect: async () => {
     await mongoose.connect(
       process.env.MONGO_URL,

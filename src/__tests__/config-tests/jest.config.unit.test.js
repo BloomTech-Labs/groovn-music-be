@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import testDb from '../../util/testDb';
+import { testDb } from '../__utils';
 
 // Creating a fake mongo model to test if Jest is workin'g
 const testSchema = new mongoose.Schema({
