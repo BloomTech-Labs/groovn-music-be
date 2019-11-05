@@ -8,17 +8,33 @@ const testSchema = new mongoose.Schema({
 
 const testModel = new mongoose.model('Test', testSchema);
 
+const mockTest = { test: true };
+
+const testResolver = {
+  Query: {
+    tests: async () => await testModel.find(),
+  },
+};
+
 describe('Jest configuration tests', () => {
   beforeAll(() => testDb.connect());
 
   afterAll(() => testDb.disconnect());
 
   it('create & save Jest test data successfully', async () => {
-    const validTest = new testModel({ test: true });
+    const validTest = new testModel(mockTest);
     const savedTest = await validTest.save();
 
     // Object ID should be defined when successfully saved to MongoDB
     expect(savedTest._id).toBeDefined();
     expect(savedTest.test).toBe(true);
+  });
+
+  it('it can test GraphQL resolvers', async () => {
+    const res = await testResolver.Query.tests();
+
+    expect(res).toBeDefined();
+    expect(res.length).toBeGreaterThan(0);
+    expect(res[0].test).toBe(true);
   });
 });
