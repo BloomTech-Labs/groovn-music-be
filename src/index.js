@@ -10,8 +10,10 @@ import { resolvers } from './resolvers';
 // Create express app instance
 const app = express();
 
-/////// One possible implementation of cors ///////
-//app.use(cors);
+let CorsOptions = {
+  //option1: setting
+};
+app.use(cors(CorsOptions));
 
 // Mongoose  config
 mongoose.set('useFindAndModify', false);
@@ -23,7 +25,7 @@ const startServer = async () => {
   const server = new ApolloServer({ typeDefs, resolvers });
 
   // Apply the express middleware if there are any
-  server.applyMiddleware({ app, cors: true });
+  server.applyMiddleware({ app, cors: false });
 
   // Connect to mongoose using DATABASE_URL and await the promise to resolve
   await mongoose.connect(DATABASE_URL, {
