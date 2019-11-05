@@ -3,8 +3,20 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import { DATABASE_URL, PORT } from './util/env';
-import { typeDefs } from './typeDefs';
-import { resolvers } from './resolvers';
+import { typeDefs } from './graphql/typeDefs';
+import { resolvers } from './graphql/resolvers';
+import SpotifyAPI from './graphql/datsources/spotify';
+
+// Setup dataSources our resolvers need
+const dataSources = () => ({
+  SpotifyAPI,
+});
+
+// Function that sets up global context for resolvers.
+// Will probably be used for authentication
+const context = async ({ req }) => {
+  return {};
+};
 
 // Create express app instance
 const app = express();
@@ -16,7 +28,12 @@ mongoose.set('useFindAndModify', false);
 // launches
 const startServer = async () => {
   // Create a new ApolloServer instance using our typeDefs and resolvers
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    dataSources,
+    context,
+  });
 
   // Apply the express middleware if there are any
   server.applyMiddleware({ app });

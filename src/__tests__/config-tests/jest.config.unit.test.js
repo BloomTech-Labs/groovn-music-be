@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import { createTestClient } from 'apollo-server-testing';
+import gql from 'graphql-tag';
+
 import { testDb } from '../__utils';
 
 // Creating a fake mongo model to test if Jest is workin'g
