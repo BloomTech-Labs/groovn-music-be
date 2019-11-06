@@ -1,5 +1,13 @@
 import mongoose from 'mongoose';
 
+import {
+  context as defaultContext,
+  typeDefs as defaultTypeDefs,
+  resolvers as defaultResolvers,
+  ApolloServer,
+  SpotifyAPI,
+} from '../';
+
 export const testDb = {
   connect: async () => {
     await mongoose.connect(
@@ -20,4 +28,19 @@ export const testDb = {
   disconnect: async () => {
     await mongoose.disconnect();
   },
+};
+
+export const constructTestServer = ({
+  context = defaultContext,
+  typeDefs = defaultTypeDefs,
+  resolvers = defaultResolvers,
+} = {}) => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    dataSources: () => ({ SpotifyAPI }),
+    context,
+  });
+
+  return { server, SpotifyAPI };
 };

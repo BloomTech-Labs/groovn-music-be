@@ -54,4 +54,9 @@ const startServer = async () => {
 };
 
 // Run the start server function to actually start the server
-startServer();
+
+if (process.env.NODE_ENV !== 'test') {
+  startServer();
+}
+
+export { dataSources, context, typeDefs, resolvers, ApolloServer, SpotifyAPI };
