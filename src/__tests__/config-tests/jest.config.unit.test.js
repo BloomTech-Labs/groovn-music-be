@@ -66,7 +66,6 @@ describe('Jest configuration tests', () => {
       data: { tests },
     } = await query({ query: GET_TESTS });
 
-    // console.log(res.data.tests);
     expect(tests).toBeDefined();
     expect(tests.length).toBeGreaterThan(0);
     expect(tests[0].test).toBe(true);
