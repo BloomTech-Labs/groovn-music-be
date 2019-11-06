@@ -1,11 +1,14 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-import { DATABASE_URL, PORT } from './util/env';
 import { typeDefs } from './graphql/typeDefs';
 import { resolvers } from './graphql/resolvers';
 import SpotifyAPI from './graphql/datsources/spotify';
+
+// Configure environment variables
+dotenv.config();
 
 // Setup dataSources our resolvers need
 const dataSources = () => ({
@@ -38,12 +41,21 @@ const startServer = async () => {
   // Apply the express middleware if there are any
   server.applyMiddleware({ app });
 
+  // Set database URI based on whether prod or dev
+  const DATABASE_URL =
+    process.env.NODE_ENV === 'production'
+      ? process.env.PROD_DATABASE_URL
+      : process.env.DEV_DATABASE_URL;
+
   // Connect to mongoose using DATABASE_URL and await the promise to resolve
   await mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     dbName: 'groovn',
   });
+
+  // Set port
+  const PORT = process.env.PORT || 4000;
 
   // Launch the server
   app.listen(PORT, () => {
