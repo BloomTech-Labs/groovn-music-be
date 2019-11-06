@@ -8,6 +8,8 @@ import {
   SpotifyAPI,
 } from '../';
 
+// This is a utility for connecting to and stopping the testing
+// MongoDB Memory Server
 export const testDb = {
   connect: async () => {
     await mongoose.connect(
@@ -30,6 +32,7 @@ export const testDb = {
   },
 };
 
+// This is a utility for setting up the ApolloServer used for testing
 export const constructTestServer = ({
   context = defaultContext,
   typeDefs = defaultTypeDefs,
