@@ -11,13 +11,13 @@ export const typeDefs = gql`
     world: String!
   }
 
-  type User {
-    id: ID!
-    username: String!
-    email: String!
-  }
+  # type User {
+  #   id: ID!
+  #   username: String!
+  #   email: String!
+  # }
 
-  type Mutation {
-    createUser(username: String!, email: String!): User!
-  }
+  # type Mutation {
+  #   createUser(username: String!, email: String!): User!
+  # }
 `;

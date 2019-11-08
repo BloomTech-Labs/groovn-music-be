@@ -1,4 +1,4 @@
-import { User } from './models/User';
+// import { User } from './models/User';
 
 // Queries for our GraphQL API go here
 
@@ -7,13 +7,13 @@ export const resolvers = {
     hello: () => ({
       world: 'hello',
     }),
-    getUsers: () => User.find(),
+    // getUsers: () => User.find(),
   },
-  Mutation: {
-    createUser: async (_, { username, email }) => {
-      const user = new User({ username, email });
-      await user.save();
-      return user;
-    },
-  },
+  // Mutation: {
+  //   createUser: async (_, { username, email }) => {
+  //     const user = new User({ username, email });
+  //     await user.save();
+  //     return user;
+  //   },
+  // },
 };
