@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { createTestClient } from 'apollo-server-testing';
+import { makeExecutableSchema } from 'apollo-server-express';
 import gql from 'graphql-tag';
 
 import { testDb, constructTestServer } from '../__utils';
@@ -42,6 +43,12 @@ const GET_TESTS = gql`
   }
 `;
 
+// Constructing test schema
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
+
 describe('Jest configuration tests', () => {
   beforeAll(() => testDb.connect());
 
@@ -68,7 +75,7 @@ describe('Jest configuration tests', () => {
 
   it('can test GraphQL queries', async () => {
     // Set up the test ApolloServer
-    const { server } = constructTestServer({ typeDefs, resolvers });
+    const { server } = constructTestServer({ schema });
     // Set up a test Apollo client to test queries
     const { query } = createTestClient(server);
     // Run the GET_TESTS query through the test client and use returned data
