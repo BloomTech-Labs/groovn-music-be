@@ -3,8 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import { typeDefs } from './graphql/typeDefs';
-import { resolvers } from './graphql/resolvers';
+import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datsources/spotify';
 
 // Configure environment variables
@@ -17,7 +16,7 @@ const dataSources = () => ({
 
 // Function that sets up global context for resolvers.
 // Will probably be used for authentication
-const context = async ({ req }) => {
+const context = async () => {
   return {};
 };
 
@@ -32,8 +31,7 @@ mongoose.set('useFindAndModify', false);
 const startServer = async () => {
   // Create a new ApolloServer instance using our typeDefs and resolvers
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     dataSources,
     context,
   });
@@ -71,4 +69,4 @@ if (process.env.NODE_ENV !== 'test') {
   startServer();
 }
 
-export { dataSources, context, typeDefs, resolvers, ApolloServer, SpotifyAPI };
+export { dataSources, context, schema, ApolloServer, SpotifyAPI };
