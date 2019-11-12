@@ -6,7 +6,11 @@ export const typeDefs = gql`
     users: [User!]!
   }
   type User {
-    user: String!
+    username: String!
+    id: ID!
+    email: String!
+    password: String!
+    displayName: String!
   }
 `;
 
@@ -14,5 +18,8 @@ export const typeDefs = gql`
 export const resolvers = {
   Query: {
     users: () => ['Bob', 'Jill'],
-  },
+  }, 
+  Mutation: {
+    createUser: (_, { email, password } ) => 
+  }
 };

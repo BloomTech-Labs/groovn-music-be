@@ -89,7 +89,7 @@ const UserSchema = new mongoose.Schema({
     },
   ],
 
-  // Below items will be worked on later, mignt not be necessary.
+  // Below items will be worked on later, might not be necessary.
 
   // likedSongs: [{
   // 	type: ObjectId,
