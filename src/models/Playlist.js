@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+const {ObjectId} = mongoose.Schema.Types;
+
 const PlayListSchema =  new mongoose.Schema({
     key: { // playlist_id
         type: Number
