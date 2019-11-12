@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 import schema from './graphql/schema';
-import SpotifyAPI from './graphql/datsources/spotify';
+import SpotifyAPI from './graphql/datasources/spotify';
 
 // Configure environment variables
 dotenv.config();
