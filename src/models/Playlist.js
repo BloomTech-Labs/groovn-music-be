@@ -16,7 +16,7 @@ const PlayListSchema =  new mongoose.Schema({
     },
     tracks: {
         description: Array, 
-        typa: ObjectId,  
+        type: ObjectId,  
         ref: "Track"
     },
     public: {

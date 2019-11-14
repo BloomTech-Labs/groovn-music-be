@@ -92,7 +92,7 @@ const UserSchema =  new mongoose.Schema({
 		ref: "RecommendedArtists"
 	}],
 	listenHistory: [{
-		typ: ObjectId,
+		type: ObjectId,
 		ref: "ListenHistory"
 	}],
 	type: "user",
