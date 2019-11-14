@@ -48,7 +48,27 @@ const UserSchema =  new mongoose.Schema({
         type: String,
         enum: ["Dont Wish To Specify", "13-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+"]
     },
+
+    id : {
+        type: String,  // Spotify user ID 
+        unique: true 
+    },
+
+    spotifyId: {
+        type: String,
+        unique: true 
+    },
     
+    url: {
+        type: String,
+        unique: true
+    },
+
+    uri: {
+        type: String,
+        unique: true
+    },
+   
     overThirteen: {
         type: boolean,
         required: function () {
@@ -60,7 +80,7 @@ const UserSchema =  new mongoose.Schema({
         }
     },
 
-    //TODO: add birthday
+    
 	gender: {
 		type: String,
 		enum: ["Male", "Female", "Non-Binary", "Don't Wish To Specify"]
