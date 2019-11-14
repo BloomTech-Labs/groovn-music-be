@@ -16,6 +16,10 @@ export const typeDefs = gql`
       password: String!
       displayName: String!
     ): User
+
+    deleteUser(id: ID!): User!
+
+    updateEmail(id: ID!, email: String!): User!
   }
 
   type User {
@@ -47,6 +51,22 @@ export const resolvers = {
         displayName,
       });
       return await newUser.save();
+    },
+    deleteUser: async (_, { id }) => {
+      const deletedUser = await User.findByIdAndDelete({ _id: id });
+      if (!deletedUser) {
+        throw new Error('Cannot find User');
+      }
+      return deletedUser;
+    },
+    updateEmail: async (_, { id, email }) => {
+      return await User.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: email,
+        },
+        { returnOriginal: false }
+      );
     },
   },
 };
