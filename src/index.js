@@ -5,9 +5,14 @@ import dotenv from 'dotenv';
 import cookieSession from 'cookie-session';
 import passportSetup from './config/passportSetup';
 import schema from './graphql/schema';
+<<<<<<< HEAD
 import SpotifyAPI from './graphql/datsources/spotify';
 import passport from 'passport';
 import authRoutes from '../auth/auth';
+=======
+import SpotifyAPI from './graphql/datasources/spotify';
+
+>>>>>>> b0f3bd20b899fca675bbb9eaf3c5770626de981f
 // Configure environment variables
 dotenv.config();
 
