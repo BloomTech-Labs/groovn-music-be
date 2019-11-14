@@ -24,19 +24,16 @@ passport.use(
       //check if in db, if not then create and save user
       console.log(User);
       console.log('just making sure i get fired offfffffffffff');
-      console.log(profile);
+      console.log(profile._json.email);
 
-      User.findOne({ firstName: 'as' }).then(currentUser => {
+      User.findOne({ email: profile._json.email }).then(currentUser => {
         if (currentUser) {
           console.log(`User is ${currentUser}`);
           done(null, currentUser);
         } else {
           new User({
-            firstName: 'asdfasd',
-            lastName: 'Gant1212',
-            displayName: 'asdsadasd',
-            email: 'demontegant1212@gmail.com',
-            password: 'heybudy',
+            displayName: profile.displayName,
+            email: profile._json.email,
           })
             .save()
             .then(newUser => {
