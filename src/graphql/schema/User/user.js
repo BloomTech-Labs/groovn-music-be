@@ -18,6 +18,8 @@ export const typeDefs = gql`
     ): User
 
     deleteUser(id: ID!): User!
+
+    updateEmail(id: ID!, email: String!): User!
   }
 
   type User {
@@ -56,6 +58,15 @@ export const resolvers = {
         throw new Error('Cannot find User');
       }
       return deletedUser;
+    },
+    updateEmail: async (_, { id, email }) => {
+      return await User.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: email,
+        },
+        { returnOriginal: false }
+      );
     },
   },
 };
