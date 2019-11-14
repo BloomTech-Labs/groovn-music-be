@@ -6,6 +6,10 @@ router.get('/login', (req, res) => {
   res.send(`<h1>Welcome to log on page</h1>`);
 });
 
+//test now
+
+//test end
+
 // auth logout
 router.get('/logout', (req, res) => {
   res.send('login out');
