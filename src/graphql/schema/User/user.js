@@ -57,5 +57,12 @@ export const resolvers = {
       }
       return deletedUser;
     },
+    updatedEmail: async (_, { id }) => {
+      const updatedEmail = await User.findByIdAndUpdate({ id });
+      if (!updatedEmail) {
+        provide new Email('example@gmail.com');
+      }
+      
+    }
   },
 };
