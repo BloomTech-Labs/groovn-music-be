@@ -18,6 +18,8 @@ export const typeDefs = gql`
     ): User
 
     deleteUser(id: ID!): User!
+
+    updateEmail(id: ID!, email: String!): User!
   }
 
   type User {
@@ -57,12 +59,14 @@ export const resolvers = {
       }
       return deletedUser;
     },
-    updatedEmail: async (_, { id }) => {
-      const updatedEmail = await User.findByIdAndUpdate({ id });
-      if (!updatedEmail) {
-        provide new Email('example@gmail.com');
-      }
-      
-    }
+    updateEmail: async (_, { id, email }) => {
+      return await User.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: email,
+        },
+        { returnOriginal: false }
+      );
+    },
   },
 };
