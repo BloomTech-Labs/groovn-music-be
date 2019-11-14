@@ -51,7 +51,7 @@ export const resolvers = {
       return await newUser.save();
     },
     deleteUser: async (_, { id }) => {
-      const deletedUser = await User.findByIdAndDelete({ id });
+      const deletedUser = await User.findByIdAndDelete({ _id: id });
       if (!deletedUser) {
         throw new Error('Cannot find User');
       }
