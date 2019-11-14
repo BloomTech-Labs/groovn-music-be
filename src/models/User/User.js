@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true,
+    //required: false,
   },
   lastName: {
     type: String,
-    required: true,
+    //required: false,
   },
   displayName: {
     type: String,
@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 const User = mongoose.model('User', UserSchema);
