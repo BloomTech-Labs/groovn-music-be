@@ -39,6 +39,7 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.7.6",
     "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "passport-spotify": "^1.1.0"
   }
 }

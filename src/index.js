@@ -33,7 +33,7 @@ app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send(
-    `<div><h1>Just testing for oAuth</h1><nav><ul><li><a href="/auth/logout">Logout</a></li><li><a href="/auth/login">Login</a></li><li><a href="/">Home</a></li><li><a href="/auth/spotify">Spotify login right here</a></li></ul></nav></div>`
+    `<div><h1>Just testing for oAuth</h1><nav><ul><li><a href="/auth/logout">Logout</a></li><li><a href="/auth/login">Login</a></li><li><a href="/">Home</a></li><li><a href="/auth/spotify">Spotify login right here</a></li><li><a href="/auth/local">local login</a></li></ul></nav></div>`
   );
 });
 

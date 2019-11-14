@@ -30,4 +30,11 @@ router.get(
   }
 );
 
+router.post('/local',
+  passport.authenticate('local', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/success');
+  }
+);
+
 module.exports = router;

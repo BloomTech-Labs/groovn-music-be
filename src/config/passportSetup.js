@@ -1,5 +1,6 @@
 import passport from 'passport';
 const SpotifyStrategy = require('passport-spotify').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 import sauce from './theSauce';
 import User from '../models/User/User';
 
@@ -44,4 +45,39 @@ passport.use(
       });
     }
   )
+);
+
+const profile = {
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: 'random',
+      email: ''
+    }
+
+passport.use(
+  new LocalStrategy(
+    profile,
+    
+    function(profile, done) {
+      console.log(profile.lastName);
+      User.findOne({ username: profile.username, password: profile.password }).then(currentUser => {
+        if (currentUser) {
+          console.log(`User is ${currentUser}`);
+          done(null, currentUser);
+        } else {
+          new User({
+            displayName: profile.username,
+            email: profile.email,
+            firstName: profile.firstName,
+            lastName: profile.lastName
+          })
+            .save()
+            .then(newUser => {
+              console.log('new user created' + newUser);
+              done(null, newUser);
+            });
+        }
+      });
+  })
 );
