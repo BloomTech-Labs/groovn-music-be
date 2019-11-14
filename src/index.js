@@ -2,12 +2,39 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-
+import cookieSession from 'cookie-session';
+import passportSetup from './config/passportSetup';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datsources/spotify';
-
+import passport from 'passport';
+import authRoutes from '../auth/auth';
 // Configure environment variables
 dotenv.config();
+
+// Create express app instance
+const app = express();
+
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [cookieSession],
+  })
+);
+
+//init passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//middleware
+app.use('/auth', authRoutes);
+
+//test
+
+app.get('/', (req, res) => {
+  res.send(
+    `<div><h1>Just testing for oAuth</h1><nav><ul><li><a href="/auth/logout">Logout</a></li><li><a href="/auth/login">Login</a></li><li><a href="/">Home</a></li><li><a href="/auth/spotify">Spotify login right here</a></li></ul></nav></div>`
+  );
+});
 
 // Setup dataSources our resolvers need
 const dataSources = () => ({
@@ -19,9 +46,6 @@ const dataSources = () => ({
 const context = async () => {
   return {};
 };
-
-// Create express app instance
-const app = express();
 
 // Mongoose  config
 mongoose.set('useFindAndModify', false);
