@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieSession from 'cookie-session';
 import passportSetup from './config/passportSetup';
+import bodyParser from 'body-parser';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datasources/spotify';
 import passport from 'passport';
@@ -23,6 +24,8 @@ app.use(
 );
 
 //init passport
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 

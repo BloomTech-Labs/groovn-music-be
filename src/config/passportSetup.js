@@ -47,37 +47,23 @@ passport.use(
   )
 );
 
-const profile = {
-      username: '',
-      password: '',
-      firstName: '',
-      lastName: 'random',
-      email: ''
-    }
-
 passport.use(
   new LocalStrategy(
-    profile,
-    
-    function(profile, done) {
-      console.log(profile.lastName);
-      User.findOne({ username: profile.username, password: profile.password }).then(currentUser => {
+    {
+      passReqToCallback: true,
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    function(req, email, password, done) {
+      User.findOne({ email: email }).then(currentUser => {
         if (currentUser) {
           console.log(`User is ${currentUser}`);
           done(null, currentUser);
         } else {
-          new User({
-            displayName: profile.username,
-            email: profile.email,
-            firstName: profile.firstName,
-            lastName: profile.lastName
-          })
-            .save()
-            .then(newUser => {
-              console.log('new user created' + newUser);
-              done(null, newUser);
-            });
+          req.alert('error', 'invalid information');
+          return done(null, false);
         }
       });
-  })
+    }
+  )
 );
