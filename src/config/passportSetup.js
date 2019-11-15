@@ -1,8 +1,10 @@
 import passport from 'passport';
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-import sauce from './theSauce';
 import User from '../models/User/User';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -17,8 +19,8 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new SpotifyStrategy(
     {
-      clientID: sauce.clientId,
-      clientSecret: sauce.clientSecret,
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
       callbackURL: '/auth/spotify/redirect',
     },
     function(accessToken, refreshToken, expires_in, profile, done) {

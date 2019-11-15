@@ -48,21 +48,26 @@ router.get('/signup', (req, res) => {
 });
 router.post('/signup', async (req, res, next) => {
   const body = req.body;
+  console.log();
   if (body.email) {
     const exist = await User.findOne({ email: body.email }).countDocuments();
 
     if (exist) {
       req.alert('error', 'User Already Exists');
-      return res.redirect('/auth/signup');
+      return res.redirect('/auth/login');
     }
 
     try {
       const newUser = new User(body);
-      await newUser.save();
+      newUser.save();
+      return res.redirect('/auth/login');
     } catch (error) {
       next(error);
     }
   }
+
+  const newUser = new User(body);
+  newUser.save();
 });
 
 //auth profile
