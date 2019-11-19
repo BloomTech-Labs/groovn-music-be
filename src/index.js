@@ -2,13 +2,43 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-
-import { typeDefs } from './graphql/typeDefs';
-import { resolvers } from './graphql/resolvers';
-import SpotifyAPI from './graphql/datsources/spotify';
+import cookieSession from 'cookie-session';
+import passportSetup from './config/passportSetup';
+import bodyParser from 'body-parser';
+import schema from './graphql/schema';
+import SpotifyAPI from './graphql/datasources/spotify';
+import passport from 'passport';
+import authRoutes from '../auth/auth';
 
 // Configure environment variables
 dotenv.config();
+
+// Create express app instance
+const app = express();
+
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [cookieSession],
+  })
+);
+
+//init passport
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//middleware
+app.use('/auth', authRoutes);
+
+//test
+
+app.get('/', (req, res) => {
+  res.send(
+    `<div><h1>Just testing for oAuth</h1><nav><ul><li><a href="/auth/logout">Logout</a></li><li><a href="/auth/login">Login</a></li><li><a href="/">Home</a></li><li><a href="/auth/spotify">Spotify login right here</a></li><li><a href="/auth/local">local login</a></li></ul></nav></div>`
+  );
+});
 
 // Setup dataSources our resolvers need
 const dataSources = () => ({
@@ -17,12 +47,9 @@ const dataSources = () => ({
 
 // Function that sets up global context for resolvers.
 // Will probably be used for authentication
-const context = async ({ req }) => {
+const context = async () => {
   return {};
 };
-
-// Create express app instance
-const app = express();
 
 // Mongoose  config
 mongoose.set('useFindAndModify', false);
@@ -32,8 +59,7 @@ mongoose.set('useFindAndModify', false);
 const startServer = async () => {
   // Create a new ApolloServer instance using our typeDefs and resolvers
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     dataSources,
     context,
   });
@@ -71,4 +97,4 @@ if (process.env.NODE_ENV !== 'test') {
   startServer();
 }
 
-export { dataSources, context, typeDefs, resolvers, ApolloServer, SpotifyAPI };
+export { dataSources, context, schema, ApolloServer, SpotifyAPI };

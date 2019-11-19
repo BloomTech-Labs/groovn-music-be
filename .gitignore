@@ -102,3 +102,6 @@ public
 
 # Ignore build dir
 build
+
+# Ignore package-lock.json
+.package-lock.json
