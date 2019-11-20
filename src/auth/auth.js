@@ -1,5 +1,6 @@
 import passport from 'passport';
 import { Strategy as SpotifyStrategy } from 'passport-spotify';
+import session from 'express-session';
 import User from '../models/User/User';
 
 passport.use(
@@ -9,13 +10,12 @@ passport.use(
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       callbackURL: 'http://localhost:4000/auth/spotify/callback',
     },
-    (accessToken, refreshToken, expires_in, profile, done) => {
-      // const users = User.getUsers();
-      // const matchingUser = users.find(user => user.spotifyId === profile.id);
+    async (accessToken, refreshToken, expires_in, profile, done) => {
       const email =
         profile.emails && profile.emails[0] && profile.emails[0].value;
-      const matchingUser = User.findOne({ email }).countDocuments() > 0;
+      const matchingUser = await User.findOne({ email });
 
+      console.log(matchingUser, await User.findOne({ email }).countDocuments());
       if (matchingUser) {
         done(null, matchingUser);
         return;
@@ -41,5 +41,18 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
+
+export const setupSession = app => {
+  //init passport
+  app.use(
+    session({
+      secret: `${process.env.SESSION_SECRET}`,
+      resave: true,
+      saveUninitialized: true,
+    })
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+};
 
 export default passport;

@@ -2,25 +2,15 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import session from 'express-session';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datasources/spotify';
-import passport from 'passport';
-import authRoutes from './auth/routes';
+import authRoutes, { setupSession } from './auth/routes';
 
 // Create express app instance
 const app = express();
 
-//init passport
-app.use(
-  session({
-    secret: `${process.env.SESSION_SECRET}`,
-    resave: true,
-    saveUninitialized: true,
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+// Setup session
+setupSession(app);
 
 //middleware
 app.use(authRoutes);

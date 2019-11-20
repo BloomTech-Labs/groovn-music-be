@@ -1,5 +1,5 @@
 import express from 'express';
-import SpotifyConfig from './auth';
+import SpotifyConfig, { setupSession } from './auth';
 
 const router = express.Router();
 
@@ -35,4 +35,5 @@ router.get('/logout', (req, res) => {
   res.redirect('/graphql');
 });
 
+export { setupSession };
 export default router;
