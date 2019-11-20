@@ -6,6 +6,7 @@ export const typeDefs = gql`
   extend type Query {
     users: [User!]!
     userById(id: ID!): User!
+    currentUser: User
   }
 
   extend type Mutation {
@@ -20,15 +21,17 @@ export const typeDefs = gql`
     deleteUser(id: ID!): User!
 
     updateEmail(id: ID!, email: String!): User!
+
+    logout: Boolean
   }
 
   type User {
-    firstName: String!
-    lastName: String!
-    id: ID!
-    email: String!
-    password: String!
+    _id: ID!
+    spotifyId: String!
     displayName: String!
+    email: String!
+    accessToken: String
+    refreshToken: String
   }
 `;
 
@@ -37,8 +40,10 @@ export const resolvers = {
   Query: {
     userById: async (_, { id }) => await User.findById(id),
     users: () => ['Bob', 'Jill'],
+    currentUser: (parent, args, context) => context.getUser(),
   },
   Mutation: {
+    logout: (parent, args, context) => context.logout(),
     createUser: async (
       _,
       { email, password, firstName, lastName, displayName }
