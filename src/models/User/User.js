@@ -25,6 +25,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     // required: true,
   },
+  accessToken: {
+    type: String,
+  },
+  refreshToken: {
+    type: String,
+  },
 });
 const User = mongoose.model('User', UserSchema);
 export default User;
