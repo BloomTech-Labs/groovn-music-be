@@ -4,7 +4,15 @@ import { RESTDataSource } from 'apollo-datasource-rest';
 class SpotifyAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'https://api.spotify.com/';
+    this.baseURL = 'https://api.spotify.com/v1/me';
+  }
+
+  async getTracks(token) {
+    return await this.get('tracks', null, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
   }
 }
 
