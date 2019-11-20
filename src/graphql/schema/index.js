@@ -11,6 +11,11 @@ import {
   resolvers as playlistResolvers,
 } from './Playlist/playlist';
 
+import {
+  typeDefs as spotifyTypeDefs,
+  resolvers as spotifyResolvers,
+} from './Spotify/spotify';
+
 const defaultTypes = gql`
   type Query {
     _empty: String
@@ -22,6 +27,6 @@ const defaultTypes = gql`
 `;
 
 export default makeExecutableSchema({
-  typeDefs: [defaultTypes, userTypeDefs, playlistTypeDefs],
-  resolvers: merge(userResolvers, playlistResolvers),
+  typeDefs: [defaultTypes, userTypeDefs, playlistTypeDefs, spotifyTypeDefs],
+  resolvers: merge(userResolvers, playlistResolvers, spotifyResolvers),
 });

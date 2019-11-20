@@ -1,58 +1,34 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cookieSession from 'cookie-session';
-import passportSetup from './config/passportSetup';
-import bodyParser from 'body-parser';
+import 'dotenv/config';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datasources/spotify';
-import passport from 'passport';
-import authRoutes from '../auth/auth';
-
-// Configure environment variables
-dotenv.config();
+import authRoutes, { setupSession } from './auth/routes';
 
 // Create express app instance
 const app = express();
 
-app.use(
-  cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [cookieSession],
-  })
-);
-
-//init passport
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(passport.initialize());
-app.use(passport.session());
+// Setup session
+setupSession(app);
 
 //middleware
-app.use('/auth', authRoutes);
-
-//test
-
-app.get('/', (req, res) => {
-  res.send(
-    `<div><h1>Just testing for oAuth</h1><nav><ul><li><a href="/auth/logout">Logout</a></li><li><a href="/auth/login">Login</a></li><li><a href="/">Home</a></li><li><a href="/auth/spotify">Spotify login right here</a></li><li><a href="/auth/local">local login</a></li></ul></nav></div>`
-  );
-});
+app.use(authRoutes);
 
 // Setup dataSources our resolvers need
 const dataSources = () => ({
-  SpotifyAPI,
+  spotifyApi: new SpotifyAPI(),
 });
 
 // Function that sets up global context for resolvers.
 // Will probably be used for authentication
-const context = async () => {
-  return {};
-};
-
-// Mongoose  config
-mongoose.set('useFindAndModify', false);
+const context = async ({ req }) => ({
+  getUser: () => {
+    const { user } = req;
+    return user;
+  },
+  logout: () => req.logout(),
+});
 
 // Async startServer function so we can connect to MongoDB before the server
 // launches
@@ -62,6 +38,11 @@ const startServer = async () => {
     schema,
     dataSources,
     context,
+    playground: {
+      settings: {
+        'request.credentials': 'same-origin',
+      },
+    },
   });
 
   // Apply the express middleware if there are any
@@ -77,6 +58,7 @@ const startServer = async () => {
   await mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
     dbName: 'groovn',
   });
 
