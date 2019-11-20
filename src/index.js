@@ -24,13 +24,11 @@ const dataSources = () => ({
 // Will probably be used for authentication
 const context = async ({ req }) => ({
   getUser: () => {
-    return req.user;
+    const { user } = req;
+    return user;
   },
   logout: () => req.logout(),
 });
-
-// Mongoose  config
-mongoose.set('useFindAndModify', false);
 
 // Async startServer function so we can connect to MongoDB before the server
 // launches
@@ -60,6 +58,7 @@ const startServer = async () => {
   await mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
     dbName: 'groovn',
   });
 

@@ -15,7 +15,6 @@ passport.use(
         profile.emails && profile.emails[0] && profile.emails[0].value;
       const matchingUser = await User.findOne({ email });
 
-      console.log(matchingUser, await User.findOne({ email }).countDocuments());
       if (matchingUser) {
         done(null, matchingUser);
         return;
