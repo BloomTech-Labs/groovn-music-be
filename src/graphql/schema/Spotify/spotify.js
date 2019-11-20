@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-// Type definitions for Playlists go here
+// Type definitions for Spotify go here
 export const typeDefs = gql`
   extend type Query {
     getLikedTracks: [Track]
@@ -20,7 +20,7 @@ export const typeDefs = gql`
   }
 `;
 
-// Resolvers for playlists go here
+// Resolvers for Spotify go here
 export const resolvers = {
   Query: {
     getLikedTracks: async (_, __, { dataSources, getUser }) => {
