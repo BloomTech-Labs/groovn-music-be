@@ -25,7 +25,9 @@ export const resolvers = {
   Query: {
     getLikedTracks: async (_, __, { dataSources, getUser }) => {
       const { accessToken } = getUser();
-      const savedTracks = await dataSources.spotifyApi.getTracks(accessToken);
+      const savedTracks = await dataSources.spotifyApi.getSavedTracks(
+        accessToken
+      );
 
       return savedTracks.items.map(
         ({ track: { id, name, album, artists } }) => ({

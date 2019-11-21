@@ -7,7 +7,7 @@ class SpotifyAPI extends RESTDataSource {
     this.baseURL = 'https://api.spotify.com/v1/me';
   }
 
-  async getTracks(token) {
+  async getSavedTracks(token) {
     return await this.get('tracks', null, {
       headers: {
         Authorization: 'Bearer ' + token,
