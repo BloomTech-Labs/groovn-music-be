@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datasources/spotify';
+import RecommendationAPI from './graphql/datasources/recommendationEngine';
 import authRoutes, { setupSession } from './auth/routes';
 
 // Create express app instance
@@ -18,6 +19,7 @@ app.use(authRoutes);
 // Setup dataSources our resolvers need
 const dataSources = () => ({
   spotifyApi: new SpotifyAPI(),
+  recommendationApi: new RecommendationAPI(),
 });
 
 // Function that sets up global context for resolvers.
@@ -33,6 +35,7 @@ const context = async ({ req }) => ({
 // Async startServer function so we can connect to MongoDB before the server
 // launches
 const startServer = async () => {
+  console.log(schema._typeMap.Query);
   // Create a new ApolloServer instance using our typeDefs and resolvers
   const server = new ApolloServer({
     schema,
