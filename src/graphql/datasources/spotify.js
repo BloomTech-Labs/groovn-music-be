@@ -26,6 +26,10 @@ class SpotifyAPI extends RESTDataSource {
       }
     );
   }
+
+  async createPlaylist(token, playlistName) {
+    return await this.post(`users/${user_id}/playlists/`);
+  }
 }
 
 export default SpotifyAPI;
