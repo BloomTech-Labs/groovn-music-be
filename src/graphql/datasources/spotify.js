@@ -38,6 +38,18 @@ class SpotifyAPI extends RESTDataSource {
       }
     );
   }
+
+  async getPlaylists() {
+    return await this
+      .get /* playlist path to Spotify playlist API */
+      /* params needed */
+      ();
+    // get user's playlists
+  }
+
+  async addTrackToPlaylist(/* playlist_id  */) {
+    return await this.post(/* path to Spotify API to add tracks to playlist */);
+  }
 }
 
 export default SpotifyAPI;
