@@ -27,7 +27,7 @@ class SpotifyAPI extends RESTDataSource {
     );
   }
 
-  async createPlaylist(token, { playlistName, playlistDesc }) {
+  async createPlaylist(token, user_id, { playlistName, playlistDesc }) {
     return await this.post(
       `users/${user_id}/playlists/`,
       { name: playlistName, description: playlistDesc },
@@ -39,16 +39,25 @@ class SpotifyAPI extends RESTDataSource {
     );
   }
 
-  async getPlaylists() {
-    return await this
-      .get /* playlist path to Spotify playlist API */
-      /* params needed */
-      ();
+  async getCurrentUserPlaylists(token) {
     // get user's playlists
+    return await this.get('me/playlists', null, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
   }
 
-  async addTrackToPlaylist(/* playlist_id  */) {
-    return await this.post(/* path to Spotify API to add tracks to playlist */);
+  async getPlaylistTracks(token, playlist_id) {
+    return await this.get(`playlists/${playlist_id}/tracks`, null, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  }
+
+  async addTrackToPlaylist(playlist_id, tracks) {
+    return await this.post(`playlists/${playlist_id}/tracks`, tracks);
   }
 }
 

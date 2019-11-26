@@ -3,13 +3,23 @@ import { gql } from 'apollo-server-express';
 // Type definitions for Playlists go here
 export const typeDefs = gql`
   extend type Query {
-    playlists: [Playlist!]!
+    getPlaylists: [Playlist!]!
   }
+
+  extend type Mutation {
+    createPlaylist(name: String!, description: String): [Playlist]
+    addTracks(playlistId: String, tracks: [String]): SnapshotID
+  }
+
   type Playlist {
     #maybe playlistID || playlist_id
-    playlist: String!
+    #playlist: String!
     name: String!
     description: String
+  }
+
+  type SnapshotID {
+    snapshot_id: String
   }
 `;
 
@@ -17,16 +27,17 @@ export const typeDefs = gql`
 export const resolvers = {
   Query: {
     users: () => ['cool playlist 01', 'cool playlist 02'],
-    getPlaylists: () => {
-      /* return playlists */
+    getPlaylists: async (_, __, { dataSources, getUser }) => {
+      const { accessToken } = await getUser();
+      return await dataSources.spotifyApi.getCurrentUserPlaylists(accessToken);
     },
   },
   Mutation: {
-    createPlaylist: async (_, { name }, { dataSources }) => {
-      return await dataSources.spotifyApi.createPlaylist(name);
+    createPlaylist: async (_, { name, description }, { dataSources }) => {
+      return await dataSources.spotifyApi.createPlaylist(name, description);
     },
-    addTracks: async (_, __, { dataSources }) => {
-      return dataSources.spotifyApi.addTrackToPlaylist();
+    addTracks: async (_, { playlistId, tracks }, { dataSources }) => {
+      return dataSources.spotifyApi.addTrackToPlaylist(playlistId, tracks);
     },
   },
 };
