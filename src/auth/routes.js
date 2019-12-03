@@ -17,6 +17,7 @@ router.get(
       'user-library-read',
       'playlist-read-collaborative',
       'playlist-modify-private',
+      'playlist-modify-public',
     ],
     showDialog: true,
   })

@@ -27,10 +27,10 @@ class SpotifyAPI extends RESTDataSource {
     );
   }
 
-  async createPlaylist(token, user_id, { playlistName, playlistDesc }) {
+  async createPlaylist(token, user_id, { name, description }) {
     return await this.post(
       `users/${user_id}/playlists/`,
-      { name: playlistName, description: playlistDesc },
+      { name, description },
       {
         headers: {
           Authorization: 'Bearer ' + token,

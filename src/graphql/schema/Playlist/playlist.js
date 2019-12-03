@@ -33,8 +33,21 @@ export const resolvers = {
     },
   },
   Mutation: {
-    createPlaylist: async (_, { name, description }, { dataSources }) => {
-      return await dataSources.spotifyApi.createPlaylist(name, description);
+    createPlaylist: async (
+      _,
+      { name, description },
+      { dataSources, getUser }
+    ) => {
+      console.log(await getUser());
+      const { accessToken, spotifyId } = await getUser();
+      return await dataSources.spotifyApi.createPlaylist(
+        accessToken,
+        spotifyId,
+        {
+          name,
+          description,
+        }
+      );
     },
     addTracks: async (_, { playlistId, tracks }, { dataSources }) => {
       return dataSources.spotifyApi.addTrackToPlaylist(playlistId, tracks);
