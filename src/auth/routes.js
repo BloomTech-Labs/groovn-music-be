@@ -27,7 +27,8 @@ router.get(
   '/auth/spotify/callback',
   SpotifyConfig.authenticate('spotify', {
     failureRedirect: '/auth/spotify',
-    successRedirect: '/home-page',
+    successRedirect: '/graphql',
+    // successRedirect: '/home-page',
   })
 );
 

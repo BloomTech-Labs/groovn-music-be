@@ -56,8 +56,12 @@ class SpotifyAPI extends RESTDataSource {
     });
   }
 
-  async addTrackToPlaylist(playlist_id, tracks) {
-    return await this.post(`playlists/${playlist_id}/tracks`, tracks);
+  async addTrackToPlaylist(token, playlist_id, tracks) {
+    return await this.post(`playlists/${playlist_id}/tracks`, tracks, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
   }
 }
 

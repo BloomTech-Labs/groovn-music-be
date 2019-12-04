@@ -8,7 +8,7 @@ passport.use(
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/spotify/callback',
+      callbackURL: 'http://localhost:4000/auth/spotify/callback',
     },
     async (accessToken, refreshToken, expires_in, profile, done) => {
       const email =

@@ -1,9 +1,10 @@
 import { gql } from 'apollo-server-express';
+import Playlist from '../../../models/Playlist';
 
 // Type definitions for Playlists go here
 export const typeDefs = gql`
   extend type Query {
-    getPlaylists: [Playlist!]!
+    getPlaylists: [Playlist]!
   }
 
   extend type Mutation {
@@ -12,10 +13,9 @@ export const typeDefs = gql`
   }
 
   type Playlist {
-    #maybe playlistID || playlist_id
-    #playlist: String!
     name: String!
     description: String
+    playlistId: String!
   }
 
   type SnapshotID {
@@ -26,7 +26,7 @@ export const typeDefs = gql`
 // Resolvers for playlists go here
 export const resolvers = {
   Query: {
-    users: () => ['cool playlist 01', 'cool playlist 02'],
+    // users: () => ['cool playlist 01', 'cool playlist 02'],
     getPlaylists: async (_, __, { dataSources, getUser }) => {
       const { accessToken } = await getUser();
       return await dataSources.spotifyApi.getCurrentUserPlaylists(accessToken);
