@@ -14,8 +14,10 @@ passport.use(
       const email =
         profile.emails && profile.emails[0] && profile.emails[0].value;
       const matchingUser = await User.findOne({ email });
-
       if (matchingUser) {
+        if (accessToken !== User.accessToken) {
+          matchingUser.accessToken = accessToken;
+        }
         done(null, matchingUser);
         return;
       }

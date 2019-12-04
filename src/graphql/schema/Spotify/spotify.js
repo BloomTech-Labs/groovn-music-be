@@ -1,9 +1,10 @@
 import { gql } from 'apollo-server-express';
 
-// Type definitions for Playlists go here
+// Type definitions for Spotify go here
 export const typeDefs = gql`
   extend type Query {
     getLikedTracks: [Track]
+    getTracksInfo(tracks: [String!]): [Track]
   }
 
   type Track {
@@ -20,12 +21,14 @@ export const typeDefs = gql`
   }
 `;
 
-// Resolvers for playlists go here
+// Resolvers for Spotify go here
 export const resolvers = {
   Query: {
     getLikedTracks: async (_, __, { dataSources, getUser }) => {
       const { accessToken } = getUser();
-      const savedTracks = await dataSources.spotifyApi.getTracks(accessToken);
+      const savedTracks = await dataSources.spotifyApi.getSavedTracks(
+        accessToken
+      );
 
       return savedTracks.items.map(
         ({ track: { id, name, album, artists } }) => ({
@@ -36,6 +39,22 @@ export const resolvers = {
           artists,
         })
       );
+    },
+
+    getTracksInfo: async (_, { tracks }, { dataSources, getUser }) => {
+      const { accessToken } = getUser();
+      const tracksInfo = await dataSources.spotifyApi.getTracksInfo(
+        accessToken,
+        tracks
+      );
+      console.log(tracksInfo);
+      return tracksInfo.tracks.map(({ id, name, album, artists }) => ({
+        id,
+        name,
+        albumName: album.name,
+        albumCover: album.images[0].url,
+        artists,
+      }));
     },
   },
 };

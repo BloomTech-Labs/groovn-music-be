@@ -16,6 +16,11 @@ import {
   resolvers as spotifyResolvers,
 } from './Spotify/spotify';
 
+import {
+  typeDefs as recommendationTypeDefs,
+  resolvers as recommendationResolvers,
+} from './Recommendation/recommendationEngine';
+
 const defaultTypes = gql`
   type Query {
     _empty: String
@@ -27,6 +32,17 @@ const defaultTypes = gql`
 `;
 
 export default makeExecutableSchema({
-  typeDefs: [defaultTypes, userTypeDefs, playlistTypeDefs, spotifyTypeDefs],
-  resolvers: merge(userResolvers, playlistResolvers, spotifyResolvers),
+  typeDefs: [
+    defaultTypes,
+    userTypeDefs,
+    playlistTypeDefs,
+    spotifyTypeDefs,
+    recommendationTypeDefs,
+  ],
+  resolvers: merge(
+    userResolvers,
+    playlistResolvers,
+    spotifyResolvers,
+    recommendationResolvers
+  ),
 });
