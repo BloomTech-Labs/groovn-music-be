@@ -7,7 +7,7 @@ export const typeDefs = gql`
   }
 
   extend type Mutation {
-    createPlaylist(name: String!, description: String): [Playlist]
+    createPlaylist(name: String!, description: String): Playlist
     addTracks(playlistId: String, tracks: [String]): SnapshotID
   }
 
