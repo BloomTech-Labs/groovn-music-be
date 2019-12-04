@@ -1,41 +1,51 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-import { typeDefs } from './graphql/typeDefs';
-import { resolvers } from './graphql/resolvers';
-import SpotifyAPI from './graphql/datsources/spotify';
-
-// Configure environment variables
-dotenv.config();
-
-// Setup dataSources our resolvers need
-const dataSources = () => ({
-  SpotifyAPI,
-});
-
-// Function that sets up global context for resolvers.
-// Will probably be used for authentication
-const context = async ({ req }) => {
-  return {};
-};
+import 'dotenv/config';
+import schema from './graphql/schema';
+import SpotifyAPI from './graphql/datasources/spotify';
+import RecommendationAPI from './graphql/datasources/recommendationEngine';
+import authRoutes, { setupSession } from './auth/routes';
 
 // Create express app instance
 const app = express();
 
-// Mongoose  config
-mongoose.set('useFindAndModify', false);
+// Setup session
+setupSession(app);
+
+//middleware
+app.use(authRoutes);
+
+// Setup dataSources our resolvers need
+const dataSources = () => ({
+  spotifyApi: new SpotifyAPI(),
+  recommendationApi: new RecommendationAPI(),
+});
+
+// Function that sets up global context for resolvers.
+// Will probably be used for authentication
+const context = async ({ req }) => ({
+  getUser: () => {
+    const { user } = req;
+    return user;
+  },
+  logout: () => req.logout(),
+});
 
 // Async startServer function so we can connect to MongoDB before the server
 // launches
 const startServer = async () => {
+  console.log(schema._typeMap.Query);
   // Create a new ApolloServer instance using our typeDefs and resolvers
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     dataSources,
     context,
+    playground: {
+      settings: {
+        'request.credentials': 'same-origin',
+      },
+    },
   });
 
   // Apply the express middleware if there are any
@@ -51,6 +61,7 @@ const startServer = async () => {
   await mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
     dbName: 'groovn',
   });
 
@@ -71,4 +82,4 @@ if (process.env.NODE_ENV !== 'test') {
   startServer();
 }
 
-export { dataSources, context, typeDefs, resolvers, ApolloServer, SpotifyAPI };
+export { dataSources, context, schema, ApolloServer, SpotifyAPI };

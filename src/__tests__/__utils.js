@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 import {
   context as defaultContext,
-  typeDefs as defaultTypeDefs,
-  resolvers as defaultResolvers,
+  schema as defaultSchema,
   ApolloServer,
   SpotifyAPI,
 } from '../';
@@ -35,12 +34,10 @@ export const testDb = {
 // This is a utility for setting up the ApolloServer used for testing
 export const constructTestServer = ({
   context = defaultContext,
-  typeDefs = defaultTypeDefs,
-  resolvers = defaultResolvers,
+  schema = defaultSchema,
 } = {}) => {
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     dataSources: () => ({ SpotifyAPI }),
     context,
   });
