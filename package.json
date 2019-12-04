@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.6.3",
+    "@sentry/browser": "^5.9.1",
     "apollo-datasource-rest": "^0.6.6",
     "apollo-server-express": "^2.9.7",
     "dotenv": "^8.2.0",
