@@ -1,6 +1,11 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
+
+import { DATABASE_URL, PORT } from './util/env';
+import { typeDefs } from './typeDefs';
+import { resolvers } from './resolvers';
 import 'dotenv/config';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datasources/spotify';
@@ -10,6 +15,15 @@ import authRoutes, { setupSession } from './auth/routes';
 // Create express app instance
 const app = express();
 
+let CorsOptions = {
+  origin: 'https://groovn-frontend.netlify.com/',
+  credentials: true,
+};
+
+app.use(cors(CorsOptions));
+
+// Mongoose  config
+mongoose.set('useFindAndModify', false);
 // Setup session
 setupSession(app);
 
@@ -32,6 +46,7 @@ const context = async ({ req }) => ({
   logout: () => req.logout(),
 });
 
+
 // Async startServer function so we can connect to MongoDB before the server
 // launches
 const startServer = async () => {
@@ -49,7 +64,7 @@ const startServer = async () => {
   });
 
   // Apply the express middleware if there are any
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: false });
 
   // Set database URI based on whether prod or dev
   const DATABASE_URL =
