@@ -1,24 +1,22 @@
 import { gql } from 'apollo-server-express';
-import Playlist from '../../../models/Playlist';
+// import Playlist from '../../../models/Playlist';
 
 // Type definitions for Playlists go here
 export const typeDefs = gql`
   extend type Query {
-    getPlaylists: [Playlist]!
+    getPlaylists: [Playlist]
   }
 
   extend type Mutation {
     createPlaylist(name: String!, description: String): Playlist
-    addTracks(playlistId: String, tracks: [String]): SnapshotID
+    addTracks(playlistId: String, tracks: [String]): String
   }
 
   type Playlist {
     name: String!
     description: String
-    playlistId: String!
-  }
-
-  type SnapshotID {
+    id: String!
+    collaborative: Boolean
     snapshot_id: String
   }
 `;
@@ -29,7 +27,18 @@ export const resolvers = {
     // users: () => ['cool playlist 01', 'cool playlist 02'],
     getPlaylists: async (_, __, { dataSources, getUser }) => {
       const { accessToken } = await getUser();
-      return await dataSources.spotifyApi.getCurrentUserPlaylists(accessToken);
+      const result = await dataSources.spotifyApi.getCurrentUserPlaylists(
+        accessToken
+      );
+      return result.items.map(
+        ({ id, name, description, collaborative, snapshot_id }) => ({
+          id,
+          name,
+          description,
+          collaborative,
+          snapshot_id,
+        })
+      );
     },
   },
   Mutation: {
