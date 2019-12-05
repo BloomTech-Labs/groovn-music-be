@@ -11,8 +11,10 @@ import { resolvers } from './resolvers';
 const app = express();
 
 let CorsOptions = {
-  //option1: setting
+  origin: 'https://groovn-frontend.netlify.com/',
+  credentials: true,
 };
+
 app.use(cors(CorsOptions));
 
 // Mongoose  config
