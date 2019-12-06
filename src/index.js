@@ -3,9 +3,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-import { DATABASE_URL, PORT } from './util/env';
-import { typeDefs } from './typeDefs';
+import { DATABASE_URL, PORT } from '..//env';
+import { typeDefs } from './graphql/schema/User';
 import { resolvers } from './resolvers';
+
 import 'dotenv/config';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datasources/spotify';
@@ -45,7 +46,6 @@ const context = async ({ req }) => ({
   },
   logout: () => req.logout(),
 });
-
 
 // Async startServer function so we can connect to MongoDB before the server
 // launches
