@@ -58,9 +58,11 @@ export const resolvers = {
         }
       );
     },
-    deleteTrack
     addTracks: async (_, { playlistId, tracks }, { dataSources }) => {
       return dataSources.spotifyApi.addTrackToPlaylist(playlistId, tracks);
     },
+    deleteTracks: async (_, { playlistId, tracks }, { dataSources }) => {
+      // delete method to delete a track from current playlist 
+    };
   },
 };
