@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-// import Playlist from '../../../models/Playlist';
+import Playlist from '../../../models/Playlist';
 
 // Type definitions for Playlists go here
 export const typeDefs = gql`
@@ -30,6 +30,7 @@ export const resolvers = {
       const result = await dataSources.spotifyApi.getCurrentUserPlaylists(
         accessToken
       );
+
       return result.items.map(
         ({ id, name, description, collaborative, snapshot_id }) => ({
           id,
@@ -47,6 +48,11 @@ export const resolvers = {
       { name, description },
       { dataSources, getUser }
     ) => {
+      // const newPlaylist = new Playlist({
+      //   name,
+      //   description,
+      // });
+      // newPlaylist.save();
       console.log(await getUser());
       const { accessToken, spotifyId } = await getUser();
       return await dataSources.spotifyApi.createPlaylist(
@@ -58,8 +64,14 @@ export const resolvers = {
         }
       );
     },
-    addTracks: async (_, { playlistId, tracks }, { dataSources }) => {
-      return dataSources.spotifyApi.addTrackToPlaylist(playlistId, tracks);
+    addTracks: async (_, { playlistId, tracks }, { dataSources, getUser }) => {
+      const { accessToken } = await getUser();
+      let playlistID = await Playlist.findById(playlistId);
+      return dataSources.spotifyApi.addTrackToPlaylist(
+        accessToken,
+        playlistID,
+        tracks
+      );
     },
   },
 };
