@@ -56,10 +56,5 @@ export const resolvers = {
         artists,
       }));
     },
-
-    deleteTracks: async (_, { token, playlistId, tracks }, { dataSources }) => {
-      // call to API deleteTracks skeleton method in preparation to build
-
-    };
   },
 };
