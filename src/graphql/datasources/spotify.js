@@ -15,7 +15,7 @@ class SpotifyAPI extends RESTDataSource {
     });
   }
 
-  async getTracksInfo (token, tracks) {
+  async getTracksInfo(token, tracks) {
     return await this.get(
       `tracks?ids=${encodeURIComponent(tracks.toString())}`,
       null,
@@ -27,7 +27,7 @@ class SpotifyAPI extends RESTDataSource {
     );
   }
 
-  async createPlaylist (token, user_id, { name, description }) {
+  async createPlaylist(token, user_id, { name, description }) {
     return await this.post(
       `users/${user_id}/playlists/`,
       { name, description },
@@ -39,7 +39,7 @@ class SpotifyAPI extends RESTDataSource {
     );
   }
 
-  async getCurrentUserPlaylists (token) {
+  async getCurrentUserPlaylists(token) {
     // get user's playlists
     return await this.get('me/playlists', null, {
       headers: {
@@ -48,16 +48,24 @@ class SpotifyAPI extends RESTDataSource {
     });
   }
 
-  async getPlaylistTracks (token, playlist_id) {
-    return await this.get (`playlists/${playlist_id}/tracks`, null, {
+  async getPlaylistTracks(token, playlist_id) {
+    return await this.get(`playlists/${playlist_id}/tracks`, null, {
       headers: {
         Authorization: 'Bearer ' + token,
       },
     });
   }
 
-  async addTrackToPlaylist (token, playlist_id, tracks) {
-    return await this.post (`playlists/${playlist_id}/tracks`, tracks, {
+  async addTrackToPlaylist(token, playlist_id, tracks) {
+    return await this.post(`playlists/${playlist_id}/tracks`, tracks, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  }
+
+  async deleteTracks(token, playlist_id, tracks) {
+    return await this.delete(`playlists/${playlist_id}/tracks`, tracks, {
       headers: {
         Authorization: 'Bearer ' + token,
       },
