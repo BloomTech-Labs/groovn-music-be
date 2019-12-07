@@ -57,9 +57,9 @@ export const resolvers = {
       }));
     },
 
-    deleteTracks: async (_, { playlistId, tracks }, { dataSources }) => {
+    deleteTracks: async (_, { token, playlistId, tracks }, { dataSources }) => {
       // call to API deleteTracks skeleton method in preparation to build
-      
+
     };
   },
 };

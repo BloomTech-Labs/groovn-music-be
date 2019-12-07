@@ -10,6 +10,8 @@ export const typeDefs = gql`
   extend type Mutation {
     createPlaylist(name: String!, description: String): Playlist
     addTracks(playlistId: String, tracks: [String]): String
+    deleteTracks(tracks: [String]): String 
+    deletePlaylist(playlistId: String): String
   }
 
   type Playlist {
@@ -19,6 +21,10 @@ export const typeDefs = gql`
     collaborative: Boolean
     snapshot_id: String
   }
+
+  deleteTracks(tracks: String!): String! 
+  deletePlaylist(playlistId: String!): String!
+
 `;
 
 // Resolvers for playlists go here
@@ -61,8 +67,13 @@ export const resolvers = {
     addTracks: async (_, { playlistId, tracks }, { dataSources }) => {
       return dataSources.spotifyApi.addTrackToPlaylist(playlistId, tracks);
     },
-    deleteTracks: async (_, { playlistId, tracks }, { dataSources }) => {
-      // skeleton prep to create a delete method to delete a track from current playlist 
-    };
+    deleteTracks: async (_, { tracks }) => {
+      const deleteTracks = await User.findByIdAndDelete({ _id: id });
+      if (!deleteTracks) {
+        throw new Error('Cannot find track');
+      }
+      return deleteTracks;
+    },
+    // skeleton prep to create a delete method to delete a track from current playlist
   },
 };
