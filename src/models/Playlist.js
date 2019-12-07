@@ -13,6 +13,9 @@ const PlayListSchema = new mongoose.Schema({
     type: String,
     required: true,
   }, //  Name of playlist
+  id: {
+    type: String,
+  },
   playlistId: { type: String }, // The spotify ID for the playlist
   // owner: {
   //   // The user who owns the playlist
@@ -24,12 +27,12 @@ const PlayListSchema = new mongoose.Schema({
   //   type: ObjectId,
   //   ref: 'Track',
   // },
-  public: {
-    type: Boolean, // True if the playlist is public, false the playlist is private. Null the playlist status is not relevant.
-  },
-  snapshotID: {
-    type: String,
-  },
+  // isPublic: {
+  //   type: Boolean, // True if the playlist is public, false the playlist is private. Null the playlist status is not relevant.
+  // },
+  // snapshotID: {
+  //   type: String,
+  // },
   // type: {
   //   description: String,
   // },

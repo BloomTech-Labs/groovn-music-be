@@ -17,7 +17,6 @@ export const typeDefs = gql`
     description: String
     id: String!
     collaborative: Boolean
-    snapshot_id: String
   }
 `;
 
@@ -31,15 +30,15 @@ export const resolvers = {
         accessToken
       );
 
-      return result.items.map(
-        ({ id, name, description, collaborative, snapshot_id }) => ({
+      return result.items.map(({ id, name, description, collaborative }) => {
+        const playlist = new Playlist({
           id,
           name,
           description,
           collaborative,
-          snapshot_id,
-        })
-      );
+        });
+        return playlist.save();
+      });
     },
   },
   Mutation: {
