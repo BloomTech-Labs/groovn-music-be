@@ -27,14 +27,14 @@ router.get(
   '/auth/spotify/callback',
   SpotifyConfig.authenticate('spotify', {
     failureRedirect: '/auth/spotify',
-    successRedirect: '/graphql',
-    // successRedirect: '/home-page',
+    // successRedirect: '/auth/spotify/callback',
+    successRedirect: '/home-page',
   })
 );
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/graphql');
+  res.redirect('/');
 });
 
 export { setupSession };
