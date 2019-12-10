@@ -56,12 +56,24 @@ class SpotifyAPI extends RESTDataSource {
     });
   }
 
-  async addTrackToPlaylist(token, playlist_id, tracks) {
-    return await this.post(`playlists/${playlist_id}/tracks`, tracks, {
-      headers: {
-        Authorization: 'Bearer ' + token,
+  async addTrackToPlaylist(
+    token,
+    tracks,
+    playlist_id = '071MN0FZG2YmznqLwOjVr7'
+  ) {
+    const trackURIs = tracks.map(track => `spotify:track:${track}`);
+    console.log(token);
+    return await this.post(
+      `playlists/${playlist_id}/tracks`,
+      {
+        uris: trackURIs,
       },
-    });
+      {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      }
+    );
   }
 }
 

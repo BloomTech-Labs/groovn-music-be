@@ -13,9 +13,6 @@ const PlayListSchema = new mongoose.Schema({
     type: String,
     required: true,
   }, //  Name of playlist
-  id: {
-    type: String,
-  },
   playlistId: { type: String }, // The spotify ID for the playlist
   // owner: {
   //   // The user who owns the playlist
