@@ -1,6 +1,39 @@
 import { gql } from 'apollo-server-express';
-// import Playlist from '../../../models/Playlist';
+import Playlist from '../../../models/Playlist';
+import { resolvers as rResolvers } from '../Recommendation/recommendationEngine';
+import { resolvers as sResolvers } from '../Spotify/spotify';
 
+const helpers = {
+  createPlaylist: async (
+    _,
+    { name, description },
+    { dataSources, getUser }
+  ) => {
+    const { accessToken, spotifyId } = await getUser();
+    const { id } = await dataSources.spotifyApi.createPlaylist(
+      accessToken,
+      spotifyId,
+      {
+        name,
+        description,
+      }
+    );
+    const newPlaylist = new Playlist({
+      playlistId: id,
+      name,
+      description,
+    });
+    return await newPlaylist.save();
+  },
+  addTracks: async (_, { tracks, playlistId }, { dataSources, getUser }) => {
+    const { accessToken } = await getUser();
+    return dataSources.spotifyApi.addTrackToPlaylist(
+      accessToken,
+      tracks,
+      playlistId
+    );
+  },
+};
 // Type definitions for Playlists go here
 export const typeDefs = gql`
   extend type Query {
@@ -9,19 +42,21 @@ export const typeDefs = gql`
 
   extend type Mutation {
     createPlaylist(name: String!, description: String): Playlist
-    addTracks(playlistId: String, tracks: [String]): String
-    deleteTracks(tracks: [String]): String
+    addTracks(tracks: [String]): Snapshot
+    createRecommendedPlaylist(name: String, description: String): Playlist
   }
 
   type Playlist {
+    _id: String!
     name: String!
     description: String
     id: String!
     collaborative: Boolean
+    tracks: [String!]
   }
 
   type Snapshot {
-    snapshot_id: String!
+    snapshot_id: String
   }
 `;
 
@@ -34,36 +69,53 @@ export const resolvers = {
       const result = await dataSources.spotifyApi.getCurrentUserPlaylists(
         accessToken
       );
-      return result.items.map(
-        ({ id, name, description, collaborative, snapshot_id }) => ({
-          id,
+
+      return result.items.map(({ id, name, description, collaborative }) => {
+        const playlist = new Playlist({
+          playlistId: id,
           name,
           description,
           collaborative,
-          snapshot_id,
-        })
-      );
+        });
+        return playlist.save();
+      });
     },
   },
   Mutation: {
-    createPlaylist: async (
+    createPlaylist: helpers.createPlaylist,
+    addTracks: helpers.addTracks,
+    createRecommendedPlaylist: async (
       _,
       { name, description },
       { dataSources, getUser }
     ) => {
-      console.log(await getUser());
-      const { accessToken, spotifyId } = await getUser();
-      return await dataSources.spotifyApi.createPlaylist(
-        accessToken,
-        spotifyId,
-        {
-          name,
-          description,
-        }
+      const { playlistId } = await helpers.createPlaylist(
+        null,
+        { name, description },
+        { dataSources, getUser }
       );
-    },
-    addTracks: async (_, { playlistId, tracks }, { dataSources }) => {
-      return dataSources.spotifyApi.addTrackToPlaylist(playlistId, tracks);
+      const likedTracks = await sResolvers.Query.getLikedTracks(null, null, {
+        dataSources,
+        getUser,
+      });
+      const recommendedSongs = await rResolvers.Query.getRecommendation(
+        null,
+        likedTracks.map(track => track.id),
+        { dataSources }
+      );
+      helpers.addTracks(
+        null,
+        { tracks: recommendedSongs, playlistId },
+        { dataSources, getUser }
+      );
+      const savedPlaylist = await Playlist.findOne({ playlistId });
+      console.log(savedPlaylist);
+      return {
+        _id: savedPlaylist._id,
+        name: savedPlaylist.name,
+        description: savedPlaylist.description,
+        tracks: recommendedSongs,
+      };
     },
     deleteTracks: async (_, { playlistId, tracks }, { dataSources }) => {
       const deleteTracks = await User.findByIdAndDelete({ _id: id });
