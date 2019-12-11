@@ -117,5 +117,13 @@ export const resolvers = {
         tracks: recommendedSongs,
       };
     },
+    deleteTracks: async (_, { playlistId, tracks }, { dataSources }) => {
+      const deleteTracks = await User.findByIdAndDelete({ _id: id });
+      if (!deleteTracks) {
+        throw new Error('Cannot find track');
+      }
+      return deleteTracks;
+    },
+    // skeleton prep to create a delete method to delete a track from current playlist
   },
 };

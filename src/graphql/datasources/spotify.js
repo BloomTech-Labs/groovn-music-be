@@ -71,6 +71,14 @@ class SpotifyAPI extends RESTDataSource {
       }
     );
   }
+
+  async deleteTracks(token, playlist_id, tracks) {
+    return await this.delete(`playlists/${playlist_id}/tracks`, tracks, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  }
 }
 
 export default SpotifyAPI;
