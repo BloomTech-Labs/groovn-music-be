@@ -109,7 +109,6 @@ export const resolvers = {
         { dataSources, getUser }
       );
       const savedPlaylist = await Playlist.findOne({ playlistId });
-      console.log(savedPlaylist);
       return {
         _id: savedPlaylist._id,
         name: savedPlaylist.name,

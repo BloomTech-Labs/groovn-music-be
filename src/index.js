@@ -47,7 +47,6 @@ const context = async ({ req }) => ({
 // Async startServer function so we can connect to MongoDB before the server
 // launches
 const startServer = async () => {
-  console.log(schema._typeMap.Query);
   // Create a new ApolloServer instance using our typeDefs and resolvers
   const server = new ApolloServer({
     schema,
