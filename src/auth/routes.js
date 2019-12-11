@@ -17,6 +17,7 @@ router.get(
       'user-library-read',
       'playlist-read-collaborative',
       'playlist-modify-private',
+      'playlist-modify-public',
     ],
     showDialog: true,
   })
@@ -26,7 +27,12 @@ router.get(
   '/auth/spotify/callback',
   SpotifyConfig.authenticate('spotify', {
     failureRedirect: '/auth/spotify',
+<<<<<<< HEAD
     successRedirect: 'http://localhost:3000',
+=======
+    successRedirect: '/graphql',
+    // successRedirect: '/home-page',
+>>>>>>> 30f7f3f5c3447d386068a67a458b5a9df4d62ffe
   })
 );
 

@@ -47,7 +47,6 @@ export const resolvers = {
         accessToken,
         tracks
       );
-      console.log(tracksInfo);
       return tracksInfo.tracks.map(({ id, name, album, artists }) => ({
         id,
         name,

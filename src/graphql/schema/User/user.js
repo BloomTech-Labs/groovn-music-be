@@ -4,7 +4,6 @@ import User from '../../../models/User/User';
 // Type definitions for User go here
 export const typeDefs = gql`
   extend type Query {
-    users: [User!]!
     userById(id: ID!): User!
     currentUser: User
   }
@@ -39,7 +38,6 @@ export const typeDefs = gql`
 export const resolvers = {
   Query: {
     userById: async (_, { id }) => await User.findById(id),
-    users: () => ['Bob', 'Jill'],
     currentUser: (parent, args, context) => context.getUser(),
   },
   Mutation: {
