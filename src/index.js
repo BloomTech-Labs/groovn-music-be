@@ -3,10 +3,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-import { DATABASE_URL, PORT } from '..//env';
-import { typeDefs } from './graphql/schema/User';
-import { resolvers } from './resolvers';
-
 import 'dotenv/config';
 import schema from './graphql/schema';
 import SpotifyAPI from './graphql/datasources/spotify';
@@ -17,7 +13,7 @@ import authRoutes, { setupSession } from './auth/routes';
 const app = express();
 
 let CorsOptions = {
-  origin: 'https://groovn-frontend.netlify.com/',
+  origin: 'http://localhost:3000',
   credentials: true,
 };
 

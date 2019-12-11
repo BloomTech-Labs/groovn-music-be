@@ -3,12 +3,14 @@ import { Strategy as SpotifyStrategy } from 'passport-spotify';
 import session from 'express-session';
 import User from '../models/User/User';
 
+const PORT = process.env.PORT;
+
 passport.use(
   new SpotifyStrategy(
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: 'http://localhost:4000/auth/spotify/callback',
+      callbackURL: `http://localhost:${PORT}/auth/spotify/callback`,
     },
     async (accessToken, refreshToken, expires_in, profile, done) => {
       const email =
@@ -48,8 +50,8 @@ export const setupSession = app => {
   app.use(
     session({
       secret: `${process.env.SESSION_SECRET}`,
-      resave: true,
-      saveUninitialized: true,
+      resave: false,
+      saveUninitialized: false,
     })
   );
   app.use(passport.initialize());
