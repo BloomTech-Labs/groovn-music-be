@@ -23,12 +23,16 @@ router.get(
   })
 );
 
+const REDIRECT_URI =
+  process.env.NODE_ENV === 'production'
+    ? 'https://groovn-frontend.netlify.com'
+    : 'http://localhost:3000';
+
 router.get(
   '/auth/spotify/callback',
   SpotifyConfig.authenticate('spotify', {
     failureRedirect: '/auth/spotify',
-    successRedirect: '/graphql',
-    // successRedirect: '/home-page',
+    successRedirect: REDIRECT_URI,
   })
 );
 
