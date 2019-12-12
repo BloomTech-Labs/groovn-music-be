@@ -12,8 +12,13 @@ import authRoutes, { setupSession } from './auth/routes';
 // Create express app instance
 const app = express();
 
+const CORS_ORIGIN =
+  process.env.NODE_ENV === 'production'
+    ? 'https://groovn-frontend.netlify.com'
+    : 'http://localhost:3000';
+
 let CorsOptions = {
-  origin: 'https://groovn-frontend.netlify.com/',
+  origin: CORS_ORIGIN,
   credentials: true,
 };
 
@@ -42,7 +47,6 @@ const context = async ({ req }) => ({
   },
   logout: () => req.logout(),
 });
-
 
 // Async startServer function so we can connect to MongoDB before the server
 // launches
