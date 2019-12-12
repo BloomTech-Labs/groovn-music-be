@@ -12,8 +12,13 @@ import authRoutes, { setupSession } from './auth/routes';
 // Create express app instance
 const app = express();
 
+const CORS_ORIGIN =
+  process.env.NODE_ENV === 'production'
+    ? 'https://groovn-frontend.netlify.com'
+    : 'http://localhost:3000';
+
 let CorsOptions = {
-  origin: 'http://localhost:3000',
+  origin: CORS_ORIGIN,
   credentials: true,
 };
 
