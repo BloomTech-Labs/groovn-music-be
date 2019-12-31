@@ -38,7 +38,7 @@ router.get(
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/graphql');
+  res.redirect(REDIRECT_URI);
 });
 
 export { setupSession };
