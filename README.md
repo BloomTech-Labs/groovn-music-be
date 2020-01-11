@@ -1,145 +1,154 @@
-init staging
+# LabsPT5 - GroovnMusic
 
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
+Deployed app ======> [GroovnMusic](www.groovnmusic.com).
 
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
+## GroovnMusic Developers
 
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
+[<img src="https://avatars0.githubusercontent.com/u/47765271?s=460&v=4" width = "100" />]
+[ DJ Zaragoza ](https://github.com/djzaragoza) 
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/djzaragoza)
+[ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/dj-zaragoza-38479212) [<img src="https://avatars3.githubusercontent.com/u/12819528?s=460&v=4" width = "100" />]
+[ Christopher Tutor ](https://github.com/pherpher089) 
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/pherpher089) 
+[ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/christopher-tutor-68a3b796/) [<img src="https://avatars1.githubusercontent.com/u/7123647?s=460&v=4" width = "100" />]
+[ Douglas Campbell ](https://github.com/Campbelld84) 
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Campbelld84) 
+[ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/douglas-campbell-dev) [<img src="https://avatars1.githubusercontent.com/u/24638769?s=460&v=4" width = "100" />]
+[ Robert Gant ](https://github.com/gant123) 
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/gant123)
+[ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/robert-gant-258978105) [<img src="https://avatars0.githubusercontent.com/u/330607?s=460&v=4" width = "100" />]
+[ Dominic Torruellas ](https://github.com/djtorel) 
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/djtorel)
+[ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/dom-torr) [<img src="https://avatars0.githubusercontent.com/u/36387815?s=460&v=4" width = "100" />]
+[ Jason Pham ](https://github.com/extrajp2014) 
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/extrajp2014) 
+[ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) [<img src="https://avatars0.githubusercontent.com/u/43683321?s=460&v=4" width = "100" />]
+[ Jason Holloway ](https://github.com/jjamaltwin)
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/jjamaltwin) 
+[ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)
+                      
+<br>
+<br>
 
-# API Documentation
+## Project Overview
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+[Trello Board](https://trello.com/b/wRlpwQHc/groovn-music)
 
-## 1️⃣ Getting started
+[Product Canvas]()
 
-To get the server running locally:
+What is GroovnMusic?
 
-🚫 adjust these scripts to match your project
+GroovnMusic is a re-imagined music app that allows users to create a personalized playlist solely recommended for them, based on songs they like.
 
-- Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+### Key Features
 
-### Backend framework goes here
+-    Ability for the user to generate a recommended playlist based by "Liked" songs
+-    Personalized playlists
+-    User-friendly, ease of navigation
+-    Millions of songs to explore
 
-🚫 Why did you choose this framework?
+## Tech Stack
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
+### Front end built using:
 
-## 2️⃣ Endpoints
+#### React | React Hooks / Context | Passport.js and OAuth 
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+Why did you choose this framework?
 
-#### Organization Routes
+-    We decided to utilize React and React Hooks library because of the power it can provide to our product.  Utilizing the Hooks concpt by neglecting the use of writing a class was time-saving.  
+-    Deviding to use React Context was a simple and smart decision by our team mainly because of it being a big part of the React library.  It gave us the ability to pass data through a component with ease.  A great way to stream line writing code.
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+#### Front end deployed to `http://groovn-frontend-prod.netlify.com/`
 
-#### User Routes
+#### [Back end](https://github.com/Lambda-School-Labs/groovn-music-be) built using:
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+####
 
-# Data Model
+-    Apollo GraphQL - writing queries, combining APIs and databases
+-    Node.js - JS runtime environent
+-    Express - web framework for Node.js
+-    MongoDB - database 
+-    Mongoose - query building and schema
 
-🚫This is just an example. Replace this with your data model
+# APIs
 
-#### 2️⃣ ORGANIZATIONS
+## Spotify API 
 
----
+We decided to use the Spotify API mainly for build time and production.  We wanted our users to have the ability to create a playlist and play their music.  By using Spotify's API, it's based on REST principles and the endpoints return JSON metadata about music artists, albums, and tracks, directly from the Spotify Data Catalogue.  It also provides access to user related data, like playlists and music that the user saves in their music library.
 
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+class SpotifyAPI extends RESTDataSource {
+  constructor() {
+    super();
+    this.baseURL = 'https://api.spotify.com/v1/me';
+  }
+
+  async getSavedTracks(token) {
+    return await this.get('tracks', null, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  }
 }
-```
 
-#### USERS
+export default SpotifyAPI;
 
----
+## Context API
 
-```
-{
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+We used the Context API solely-based on using the React library.  Utilizing Context, it creates an object for us.  Once React renders a componentk that subscribes to a Context object, it will read the context value closest to the matching Provider above in the tree. 
+
+export default function App() {
+  return (
+    <MainContextProvider>
+      <div className="app">
+        <Route to exact path="/landing-page" component={LandingPage} />
+        <Route exact to="/protected" component={PrivateRoute} />
+      </div>
+    </MainContextProvider>
+  );
 }
-```
 
-## 2️⃣ Actions
+# Environment Variables
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+DEV_DATABASE_URL=‘mongodb://localhost:27017/groovn’ - app database
+SPOTIFY_CLIENT_ID=‘abe6bf42ad914ede9a28b1c8db260cb8’ - Spotify user ID
+SPOTIFY_CLIENT_SECRET=‘891af5d42954449f9c9660b6f11dfa3b’ - key used for Spotify users logging in and out
+SESSION_SECRET=‘d%wP3p&uQ&8&%TzZh@uzf!y#J%*!WR4X’ - key used for signing and/or encrypting cookies set by our app
+PORT=‘4000’ - port used for our app
+NODE_ENV = ‘Development’ - development environment
 
-`getOrgs()` -> Returns all organizations
+# Content Licenses
 
-`getOrg(orgId)` -> Returns a single organization by ID
+| Image/License(s) Filename | Source / Creator | License                                                                      |
+| ------------------------- | ---------------- | ---------------------------------------------------------------------------- |
+| Spotify API               | Team             | [Spotify API](https://developer.spotify.com/terms/#iii) |
+|                           | Team             | [MIT](https://github.com/SamHerbert/SVG-Loaders)                             |
 
-`addOrg(org)` -> Returns the created org
+# Testing
 
-`updateOrg(orgId)` -> Update an organization by ID
+🚫Document what you used for testing and why
 
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
+# Installation Instructions
 
-`getUser(userId)` -> Returns a single user by user ID
+🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+## Other Scripts
 
-`updateUser(userId, changes object)` -> Updates a single user by ID.
+🚫replace these examples with your own
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+    * typecheck - runs the TypeScript compiler
+    * build - creates a build of the application
+    * start - starts the production server after a build is created
+    * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
 
-## 3️⃣ Environment Variables
-
-In order for the app to function correctly, the user must set up their own environment variables.
-
-create a .env file that includes the following:
-
-🚫 These are just examples, replace them with the specifics for your app
-    
-    *  STAGING_DB - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
-    
-## Contributing
+# Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
-Please note we have a [code of conduct](./code_of_conduct.md). Please follow it in all your interactions with the project.
+Please note we have a [code of conduct](./CODE_OF_CONDUCT.md). Please follow it in all your interactions with the project.
 
-### Issue/Bug Request
-
+## Issue/Bug Request
+   
  **If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
  - Check first to see if your issue has already been reported.
  - Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
@@ -170,5 +179,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Backend Documentation](🚫_link to your backend readme here_) for details on the backend of our project.
